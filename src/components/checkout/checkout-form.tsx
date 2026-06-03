@@ -136,17 +136,17 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
           <p className="mt-3 max-w-2xl text-stone-600">{dict.checkout.copy}</p>
         </div>
 
-        <motion.fieldset
+        <motion.div
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 18 }}
           viewport={{ once: true, amount: 0.24 }}
           transition={{ duration: 0.5, ease: motionEase }}
           className="alive-card rounded-[8px] p-6"
         >
-          <legend className="flex items-center gap-2 px-1 text-sm font-semibold text-stone-950">
+          <div className="flex items-center gap-2 text-sm font-semibold text-stone-950">
             <PackageCheck className="size-4" />
             {dict.checkout.fulfillment}
-          </legend>
+          </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               { value: "delivery" as const, label: dict.checkout.delivery, icon: Truck },
@@ -168,16 +168,16 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               </button>
             ))}
           </div>
-        </motion.fieldset>
+        </motion.div>
 
-        <motion.fieldset
+        <motion.div
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 18 }}
           viewport={{ once: true, amount: 0.24 }}
           transition={{ duration: 0.5, ease: motionEase }}
           className="alive-card rounded-[8px] p-6"
         >
-          <legend className="px-1 text-sm font-semibold text-stone-950">{dict.checkout.contact}</legend>
+          <div className="text-sm font-semibold text-stone-950">{dict.checkout.contact}</div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <TextInput label={dict.checkout.name} name="name" defaultValue={checkoutDraft?.customer?.name} />
             <TextInput
@@ -213,19 +213,19 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               />
             </label>
           </div>
-        </motion.fieldset>
+        </motion.div>
 
-        <motion.fieldset
+        <motion.div
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 18 }}
           viewport={{ once: true, amount: 0.24 }}
           transition={{ duration: 0.5, ease: motionEase }}
           className="alive-card rounded-[8px] p-6"
         >
-          <legend className="flex items-center gap-2 px-1 text-sm font-semibold text-stone-950">
+          <div className="flex items-center gap-2 text-sm font-semibold text-stone-950">
             <CreditCard className="size-4" />
             {dict.checkout.payment}
-          </legend>
+          </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             {[
               { value: "bank-transfer" as const, label: dict.checkout.bank },
@@ -247,7 +247,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               </button>
             ))}
           </div>
-        </motion.fieldset>
+        </motion.div>
 
         {error && <p className="rounded-[8px] border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
 
