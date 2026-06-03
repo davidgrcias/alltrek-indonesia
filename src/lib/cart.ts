@@ -94,5 +94,11 @@ export function updateCartQuantity(
 }
 
 export function removeCartItem(items: CartItem[], productId: string, variantId?: string) {
-  return items.filter((item) => !(item.productId === productId && item.variantId === variantId));
+  return items.filter((item) => {
+    if (item.productId !== productId) {
+      return true;
+    }
+
+    return variantId !== undefined && item.variantId !== variantId;
+  });
 }

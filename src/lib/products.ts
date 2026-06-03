@@ -976,17 +976,29 @@ export function getRelatedProducts(product: Product, limit = 4) {
     .map(({ candidate }) => candidate);
 }
 
-export function getAgentCatalogContext() {
+export function getAgentCatalogContext(locale: "id" | "en" = "en") {
   return products.map((product) => ({
     id: product.id,
     name: product.name,
     category: product.category,
+    categoryLabel: categoryLabels[product.category][locale],
     price: product.price,
     compareAtPrice: product.compareAtPrice,
+    discountLabel: product.discountLabel,
     availability: product.availability,
+    availabilityLabel: availabilityLabels[product.availability][locale],
+    rating: product.rating,
+    badges: product.badges,
+    variants: product.variants.map((variant) => ({
+      id: variant.id,
+      name: variant.name,
+      price: variant.price ?? product.price,
+    })),
     capacity: product.capacity,
     weather: product.weather,
     useCases: product.useCases,
+    bestSeller: Boolean(product.bestSeller),
+    productPath: `/products/${product.slug}`,
     features: product.features.slice(0, 4),
   }));
 }

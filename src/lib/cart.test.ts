@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateCartTotals, getCartLines, normalizeCart } from "./cart";
+import { calculateCartTotals, getCartLines, normalizeCart, removeCartItem } from "./cart";
 
 describe("cart utilities", () => {
   it("normalizes duplicate cart lines", () => {
@@ -24,5 +24,18 @@ describe("cart utilities", () => {
 
     expect(lines[0].product.name).toContain("RYGEN");
     expect(lines[0].lineTotal).toBe(280000);
+  });
+
+  it("removes every variant when variant is omitted", () => {
+    const items = removeCartItem(
+      [
+        { productId: "rygen", variantId: "black", quantity: 1 },
+        { productId: "rygen", variantId: "khaki", quantity: 1 },
+        { productId: "eclipta", variantId: "ivory-pro", quantity: 1 },
+      ],
+      "rygen",
+    );
+
+    expect(items).toEqual([{ productId: "eclipta", variantId: "ivory-pro", quantity: 1 }]);
   });
 });

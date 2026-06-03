@@ -7,7 +7,13 @@ import { CreditCard, MapPin, PackageCheck, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/cart-provider";
 import { motionEase } from "@/components/motion/reveal";
 import { CART_STORAGE_KEY, calculateCartTotals } from "@/lib/cart";
-import { createOrder, validateCheckout } from "@/lib/checkout";
+import {
+  CHECKOUT_DRAFT_STORAGE_KEY,
+  createOrder,
+  readCheckoutDraft,
+  validateCheckout,
+  type CheckoutDraft,
+} from "@/lib/checkout";
 import { formatPrice } from "@/lib/products";
 import { localizePath } from "@/lib/i18n";
 import { writeOrderToStorage } from "@/lib/orders";
@@ -24,8 +30,32 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
   const { setFulfillment } = cart;
   const [fulfillment, setFulfillmentState] = useState<Fulfillment>("delivery");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("bank-transfer");
+  const [checkoutDraft, setCheckoutDraft] = useState<CheckoutDraft | undefined>();
   const [error, setError] = useState("");
   const totals = useMemo(() => calculateCartTotals(cart.items, fulfillment), [cart.items, fulfillment]);
+  const checkoutDraftKey = useMemo(
+    () => JSON.stringify(checkoutDraft ?? {}),
+    [checkoutDraft],
+  );
+
+  useEffect(() => {
+    const draft = readCheckoutDraft(window.localStorage);
+    if (!draft) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setCheckoutDraft(draft);
+      if (draft.fulfillment) {
+        setFulfillmentState(draft.fulfillment);
+      }
+      if (draft.paymentMethod) {
+        setPaymentMethod(draft.paymentMethod);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     setFulfillment(fulfillment);
@@ -63,6 +93,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
       className="mx-auto grid max-w-7xl items-start gap-6 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8"
     >
       <motion.form
+        key={checkoutDraftKey}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.08, ease: motionEase }}
@@ -89,6 +120,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
             const order = createOrder(validated.data, cart.items);
             writeOrderToStorage(window.localStorage, order);
             window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify([]));
+            window.localStorage.removeItem(CHECKOUT_DRAFT_STORAGE_KEY);
             cart.clearCart();
             router.push(localizePath(locale, `/orders/${order.id}`));
           } catch (caught) {
@@ -147,16 +179,27 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
         >
           <legend className="px-1 text-sm font-semibold text-stone-950">{dict.checkout.contact}</legend>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <TextInput label={dict.checkout.name} name="name" />
-            <TextInput label={dict.checkout.email} name="email" type="email" />
-            <TextInput label={dict.checkout.phone} name="phone" />
-            <TextInput label={dict.checkout.city} name="city" />
+            <TextInput label={dict.checkout.name} name="name" defaultValue={checkoutDraft?.customer?.name} />
+            <TextInput
+              label={dict.checkout.email}
+              name="email"
+              type="email"
+              defaultValue={checkoutDraft?.customer?.email}
+            />
+            <TextInput label={dict.checkout.phone} name="phone" defaultValue={checkoutDraft?.customer?.phone} />
+            <TextInput
+              label={dict.checkout.city}
+              name="city"
+              defaultValue={checkoutDraft?.customer?.city ?? (fulfillment === "pickup" ? "Jakarta" : "")}
+            />
             <label className="sm:col-span-2">
               <span className="text-sm font-semibold text-stone-800">{dict.checkout.address}</span>
               <textarea
                 name="address"
                 rows={4}
-                defaultValue={fulfillment === "pickup" ? store.address : ""}
+                defaultValue={
+                  checkoutDraft?.customer?.address ?? (fulfillment === "pickup" ? store.address : "")
+                }
                 className={`${inputClass} py-2`}
               />
             </label>
@@ -165,6 +208,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               <textarea
                 name="notes"
                 rows={3}
+                defaultValue={checkoutDraft?.customer?.notes}
                 className={`${inputClass} py-2`}
               />
             </label>
@@ -247,13 +291,24 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
   );
 }
 
-function TextInput({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
+function TextInput({
+  label,
+  name,
+  type = "text",
+  defaultValue,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  defaultValue?: string;
+}) {
   return (
     <label>
       <span className="text-sm font-semibold text-stone-800">{label}</span>
       <input
         name={name}
         type={type}
+        defaultValue={defaultValue}
         className={`${inputClass} h-11`}
       />
     </label>

@@ -15,10 +15,54 @@ export const checkoutSchema = z.object({
   paymentMethod: z.enum(["bank-transfer", "qris", "cash-pickup"]),
 });
 
+export const CHECKOUT_DRAFT_STORAGE_KEY = "alltrek-checkout-draft";
+
+export const checkoutDraftSchema = z.object({
+  customer: z
+    .object({
+      name: z.string().trim().max(120).optional(),
+      email: z.string().trim().max(160).optional(),
+      phone: z.string().trim().max(60).optional(),
+      city: z.string().trim().max(120).optional(),
+      address: z.string().trim().max(500).optional(),
+      notes: z.string().trim().max(500).optional(),
+    })
+    .optional(),
+  fulfillment: z.enum(["delivery", "pickup"]).optional(),
+  paymentMethod: z.enum(["bank-transfer", "qris", "cash-pickup"]).optional(),
+});
+
 export type CheckoutInput = z.infer<typeof checkoutSchema>;
+export type CheckoutDraft = z.infer<typeof checkoutDraftSchema>;
+
+type CheckoutDraftStorage = Pick<Storage, "getItem" | "removeItem" | "setItem">;
 
 export function validateCheckout(input: unknown) {
   return checkoutSchema.safeParse(input);
+}
+
+export function readCheckoutDraft(storage: Pick<Storage, "getItem" | "removeItem">) {
+  try {
+    const stored = storage.getItem(CHECKOUT_DRAFT_STORAGE_KEY);
+    if (!stored) {
+      return undefined;
+    }
+
+    const parsed = checkoutDraftSchema.safeParse(JSON.parse(stored));
+    if (!parsed.success) {
+      storage.removeItem(CHECKOUT_DRAFT_STORAGE_KEY);
+      return undefined;
+    }
+
+    return parsed.data;
+  } catch {
+    storage.removeItem(CHECKOUT_DRAFT_STORAGE_KEY);
+    return undefined;
+  }
+}
+
+export function writeCheckoutDraft(storage: CheckoutDraftStorage, draft: CheckoutDraft) {
+  storage.setItem(CHECKOUT_DRAFT_STORAGE_KEY, JSON.stringify(checkoutDraftSchema.parse(draft)));
 }
 
 export function createOrderId(now = new Date()) {

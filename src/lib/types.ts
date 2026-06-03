@@ -103,5 +103,21 @@ export type AgentResponse = {
     add?: CartPatchItem[];
     remove?: string[];
   };
+  checkoutIntent?: {
+    ready: boolean;
+    fulfillment?: Fulfillment;
+    paymentMethod?: PaymentMethod;
+    missingFields: string[];
+    note?: string;
+  };
+  checkoutDraft?: {
+    customer?: Partial<Customer>;
+    fulfillment?: Fulfillment;
+    paymentMethod?: PaymentMethod;
+  };
+  handoff?: {
+    channel: "whatsapp" | "tokopedia" | "store" | "none";
+    reason?: string;
+  };
   quickReplies: string[];
 };
