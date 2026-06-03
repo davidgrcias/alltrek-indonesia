@@ -23,7 +23,7 @@ export const agentRequestSchema = z.object({
       }),
     )
     .min(1)
-    .max(16),
+    .max(100),
   cart: z
     .array(
       z.object({
