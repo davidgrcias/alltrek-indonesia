@@ -10,14 +10,19 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return Response.json({ configured: Boolean(process.env.GEMINI_API_KEY) });
+  return Response.json({
+    configured: Boolean(process.env.GEMINI_API_KEY || process.env.PIONEER_API_KEY),
+    provider: process.env.PIONEER_API_KEY ? "pioneer" : "gemini",
+  });
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
+  const pioneerApiKey = process.env.PIONEER_API_KEY;
+  const geminiApiKey = process.env.GEMINI_API_KEY;
+
+  if (!pioneerApiKey && !geminiApiKey) {
     return Response.json(
-      { error: "Gemini is not configured. Set GEMINI_API_KEY." },
+      { error: "API Key not configured. Set GEMINI_API_KEY or PIONEER_API_KEY." },
       { status: 503 },
     );
   }
@@ -36,6 +41,58 @@ export async function POST(request: Request) {
 
   const payload = parsed.data;
   const catalogContext = getAgentCatalogContext();
+  const systemPrompt = buildAgentSystemPrompt(payload.locale, catalogContext);
+
+  if (pioneerApiKey) {
+    const model = process.env.PIONEER_MODEL || "claude-sonnet-4-6";
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...payload.messages.map((message) => ({
+        role: message.role === "assistant" ? "assistant" : "user",
+        content: message.content,
+      })),
+      {
+        role: "user",
+        content: `Current cart: ${JSON.stringify(payload.cart)}\nPlease respond strictly in JSON format as required.`,
+      }
+    ];
+
+    try {
+      const response = await fetch("https://api.pioneer.ai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${pioneerApiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          stream: false,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Pioneer API response error: ${response.status} - ${errorText}`);
+      }
+
+      const responseJson = await response.json();
+      const text = responseJson.choices?.[0]?.message?.content ?? "";
+      const parsedResponse = parseAgentResponse(text);
+      return Response.json(parsedResponse);
+    } catch (error) {
+      return Response.json(
+        {
+          error: "Pioneer response could not be generated or parsed.",
+          detail: error instanceof Error ? error.message : "Unknown error",
+        },
+        { status: 502 },
+      );
+    }
+  }
+
+  // Fallback to Gemini
+  const apiKey = geminiApiKey!;
   const ai = new GoogleGenAI({ apiKey });
 
   const transcript = payload.messages
@@ -43,7 +100,7 @@ export async function POST(request: Request) {
     .join("\n");
 
   const prompt = [
-    buildAgentSystemPrompt(payload.locale, catalogContext),
+    systemPrompt,
     `Current cart: ${JSON.stringify(payload.cart)}`,
     "Conversation:",
     transcript,
