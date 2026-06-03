@@ -56,7 +56,7 @@ export function CartSummary({ dict, locale }: { dict: Dictionary; locale: Locale
             {dict.cart.clear}
           </button>
         </div>
-        <div className="mt-6 divide-y divide-stone-900/10 border-y border-stone-900/10 bg-white/45">
+        <div className="mt-6 overflow-hidden rounded-[8px] border border-stone-900/15 bg-white/50 shadow-sm divide-y divide-stone-900/10">
           <AnimatePresence initial={false}>
             {lines.map((line) => (
               <motion.div
@@ -66,7 +66,7 @@ export function CartSummary({ dict, locale }: { dict: Dictionary; locale: Locale
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 18 }}
                 transition={{ duration: 0.28, ease: motionEase }}
-                className="grid gap-4 py-5 sm:grid-cols-[1fr_auto]"
+                className="grid gap-4 px-4 py-5 sm:grid-cols-[1fr_auto] sm:px-6"
               >
                 <div className="flex gap-4">
                   <div className="relative size-20 shrink-0 overflow-hidden rounded-[8px] bg-stone-100">
