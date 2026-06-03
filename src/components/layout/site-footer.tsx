@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Mountain, Phone } from "lucide-react";
 import { localizePath } from "@/lib/i18n";
 import { store } from "@/lib/store";
 import type { Dictionary } from "@/dictionaries/id";
@@ -7,17 +7,20 @@ import type { Locale } from "@/lib/types";
 
 export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (
-    <footer className="border-t border-stone-200 bg-stone-950 text-white">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="topo-lines border-t border-white/10 bg-stone-950 text-white">
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <Link href={localizePath(locale)} className="text-lg font-semibold">
-            Alltrek Indonesia
+          <Link href={localizePath(locale)} className="inline-flex items-center gap-2 text-lg font-semibold">
+            <span className="grid size-9 place-items-center rounded-[8px] bg-amber-400 text-stone-950">
+              <Mountain className="size-5" />
+            </span>
+            <span>Alltrek Indonesia</span>
           </Link>
-          <p className="mt-3 max-w-md text-sm leading-6 text-stone-300">{dict.footer.about}</p>
+          <p className="mt-3 max-w-md text-sm leading-6 text-stone-200">{dict.footer.about}</p>
         </div>
         <div>
           <h2 className="text-sm font-semibold">{dict.footer.storeHours}</h2>
-          <div className="mt-3 space-y-2 text-sm text-stone-300">
+          <div className="mt-3 space-y-2 text-sm text-stone-200">
             <p className="flex gap-2">
               <MapPin className="mt-0.5 size-4 shrink-0 text-amber-300" />
               <span>{store.address}</span>
@@ -42,7 +45,7 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-md border border-white/15 px-3 py-2 text-sm text-stone-200 hover:bg-white/10"
+                className="button-rise rounded-[8px] border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-white hover:bg-white/15"
               >
                 {link.label}
               </a>

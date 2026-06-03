@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useRef, useSyncExternalStore } from "react";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { CheckCircle2, ExternalLink, MessageCircle } from "lucide-react";
 import { getCartLines } from "@/lib/cart";
+import { motionEase } from "@/components/motion/reveal";
 import { formatPrice } from "@/lib/products";
 import { localizePath } from "@/lib/i18n";
 import { getOrderFromStorage } from "@/lib/orders";
@@ -32,26 +34,43 @@ export function OrderDetail({ id, dict, locale }: { id: string; dict: Dictionary
 
   if (!order) {
     return (
-      <section className="mx-auto flex min-h-[52vh] max-w-3xl flex-col items-center justify-center px-4 text-center">
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: motionEase }}
+        className="mx-auto flex min-h-[52vh] max-w-3xl flex-col items-center justify-center px-4 text-center"
+      >
         <h1 className="text-3xl font-semibold text-stone-950">{dict.order.notFound}</h1>
         <Link
           href={localizePath(locale, "/products")}
-          className="mt-6 inline-flex h-11 items-center rounded-md bg-emerald-900 px-5 text-sm font-semibold text-white"
+          className="button-rise mt-6 inline-flex h-11 items-center rounded-[8px] bg-emerald-900 px-5 text-sm font-semibold text-white"
         >
           {dict.common.continueShopping}
         </Link>
-      </section>
+      </motion.section>
     );
   }
 
   const lines = getCartLines(order.items);
-  const whatsappMessage = `Halo Alltrek, saya ingin konfirmasi pesanan mock ${order.id} dengan total ${formatPrice(order.total)}.`;
+  const whatsappMessage = `Halo Alltrek, saya ingin konfirmasi pesanan ${order.id} dengan total ${formatPrice(order.total)}.`;
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-[1fr_360px]">
-      <div className="rounded-md border border-stone-200 bg-white p-6 shadow-sm">
+    <motion.section
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, ease: motionEase }}
+      className="mx-auto grid max-w-7xl items-start gap-6 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8"
+    >
+      <div className="alive-card rounded-[8px] p-6">
         <div className="flex items-start gap-3">
-          <CheckCircle2 className="mt-1 size-8 text-emerald-800" />
+          <motion.span
+            initial={{ scale: 0.6, rotate: -12 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 420, damping: 24 }}
+            className="mt-1 grid size-10 place-items-center rounded-[8px] bg-emerald-900 text-white"
+          >
+            <CheckCircle2 className="size-6" />
+          </motion.span>
           <div>
             <p className="text-sm font-semibold uppercase text-emerald-800">{dict.order.status}</p>
             <h1 className="mt-2 text-3xl font-semibold text-stone-950">{dict.order.successTitle}</h1>
@@ -71,15 +90,16 @@ export function OrderDetail({ id, dict, locale }: { id: string; dict: Dictionary
             href={getWhatsAppUrl(whatsappMessage)}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-900 px-5 text-sm font-semibold text-white hover:bg-emerald-800"
+            className="button-rise inline-flex h-11 items-center justify-center gap-2 rounded-[8px] bg-emerald-900 px-5 text-sm font-semibold text-white"
           >
+            <MessageCircle className="size-4" />
             {dict.common.contactWhatsApp}
           </a>
           <a
             href={store.tokopediaUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-stone-200 px-5 text-sm font-semibold text-stone-800 hover:bg-stone-50"
+            className="button-rise inline-flex h-11 items-center justify-center gap-2 rounded-[8px] border border-stone-900/15 bg-white px-5 text-sm font-semibold text-stone-800"
           >
             {dict.common.tokopedia}
             <ExternalLink className="size-4" />
@@ -87,9 +107,9 @@ export function OrderDetail({ id, dict, locale }: { id: string; dict: Dictionary
         </div>
       </div>
 
-      <aside className="h-fit rounded-md border border-stone-200 bg-white p-5 shadow-sm">
+      <aside className="alive-card sticky top-24 h-fit rounded-[8px] p-6">
         <h2 className="text-lg font-semibold text-stone-950">{dict.cart.summary}</h2>
-        <div className="mt-5 divide-y divide-stone-200 border-y border-stone-200">
+        <div className="mt-5 divide-y divide-stone-900/10 border-y border-stone-900/10">
           {lines.map((line) => (
             <div key={`${line.productId}-${line.variantId}`} className="py-3 text-sm">
               <p className="line-clamp-1 font-semibold text-stone-950">{line.product.name}</p>
@@ -114,13 +134,13 @@ export function OrderDetail({ id, dict, locale }: { id: string; dict: Dictionary
           </div>
         </dl>
       </aside>
-    </section>
+    </motion.section>
   );
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-stone-200 p-3">
+    <div className="rounded-[8px] border border-stone-900/15 bg-white/65 p-3">
       <p className="text-xs font-semibold uppercase text-stone-500">{label}</p>
       <p className="mt-1 font-semibold text-stone-950">{value}</p>
     </div>

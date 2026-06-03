@@ -2,16 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { CreditCard, MapPin, PackageCheck, Truck } from "lucide-react";
 import { useCart } from "@/components/cart/cart-provider";
+import { motionEase } from "@/components/motion/reveal";
 import { CART_STORAGE_KEY, calculateCartTotals } from "@/lib/cart";
-import { createMockOrder, validateCheckout } from "@/lib/checkout";
+import { createOrder, validateCheckout } from "@/lib/checkout";
 import { formatPrice } from "@/lib/products";
 import { localizePath } from "@/lib/i18n";
 import { writeOrderToStorage } from "@/lib/orders";
 import { store } from "@/lib/store";
 import type { Dictionary } from "@/dictionaries/id";
 import type { Fulfillment, Locale, PaymentMethod } from "@/lib/types";
+
+const inputClass =
+  "mt-2 w-full rounded-[8px] border border-stone-900/15 bg-white px-3 text-sm text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]";
 
 export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const router = useRouter();
@@ -38,16 +43,29 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
 
   if (cart.lines.length === 0) {
     return (
-      <section className="mx-auto flex min-h-[52vh] max-w-3xl flex-col items-center justify-center px-4 text-center">
+      <motion.section
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: motionEase }}
+        className="mx-auto flex min-h-[52vh] max-w-3xl flex-col items-center justify-center px-4 text-center"
+      >
         <h1 className="text-3xl font-semibold text-stone-950">{dict.cart.emptyTitle}</h1>
         <p className="mt-3 max-w-xl text-stone-600">{dict.cart.emptyCopy}</p>
-      </section>
+      </motion.section>
     );
   }
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-[1fr_360px]">
-      <form
+    <motion.section
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, ease: motionEase }}
+      className="mx-auto grid max-w-7xl items-start gap-6 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_380px] xl:gap-8"
+    >
+      <motion.form
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.08, ease: motionEase }}
         className="space-y-6"
         onSubmit={(event) => {
           event.preventDefault();
@@ -68,7 +86,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
           }
 
           try {
-            const order = createMockOrder(validated.data, cart.items);
+            const order = createOrder(validated.data, cart.items);
             writeOrderToStorage(window.localStorage, order);
             window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify([]));
             cart.clearCart();
@@ -79,12 +97,20 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
         }}
       >
         <div>
-          <p className="text-sm font-semibold uppercase text-emerald-800">{dict.checkout.title}</p>
+          <p className="text-sm font-semibold uppercase text-emerald-800">
+            {locale === "id" ? "Ringkas pesanan Alltrek" : "Alltrek order desk"}
+          </p>
           <h1 className="mt-2 text-3xl font-semibold text-stone-950">{dict.checkout.title}</h1>
           <p className="mt-3 max-w-2xl text-stone-600">{dict.checkout.copy}</p>
         </div>
 
-        <fieldset className="rounded-md border border-stone-200 bg-white p-5 shadow-sm">
+        <motion.fieldset
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 18 }}
+          viewport={{ once: true, amount: 0.24 }}
+          transition={{ duration: 0.5, ease: motionEase }}
+          className="alive-card rounded-[8px] p-6"
+        >
           <legend className="flex items-center gap-2 px-1 text-sm font-semibold text-stone-950">
             <PackageCheck className="size-4" />
             {dict.checkout.fulfillment}
@@ -99,10 +125,10 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
                 type="button"
                 onClick={() => updateFulfillment(option.value)}
                 className={[
-                  "flex h-12 items-center gap-2 rounded-md border px-3 text-sm font-semibold",
+                  "button-rise flex h-12 items-center gap-2 rounded-[8px] border px-3 text-sm font-semibold",
                   fulfillment === option.value
                     ? "border-emerald-800 bg-emerald-50 text-emerald-950"
-                    : "border-stone-200 text-stone-700",
+                    : "border-stone-900/15 bg-white text-stone-700",
                 ].join(" ")}
               >
                 <option.icon className="size-4" />
@@ -110,9 +136,15 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               </button>
             ))}
           </div>
-        </fieldset>
+        </motion.fieldset>
 
-        <fieldset className="rounded-md border border-stone-200 bg-white p-5 shadow-sm">
+        <motion.fieldset
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 18 }}
+          viewport={{ once: true, amount: 0.24 }}
+          transition={{ duration: 0.5, ease: motionEase }}
+          className="alive-card rounded-[8px] p-6"
+        >
           <legend className="px-1 text-sm font-semibold text-stone-950">{dict.checkout.contact}</legend>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <TextInput label={dict.checkout.name} name="name" />
@@ -125,7 +157,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
                 name="address"
                 rows={4}
                 defaultValue={fulfillment === "pickup" ? store.address : ""}
-                className="mt-2 w-full rounded-md border border-stone-200 px-3 py-2 text-sm outline-none focus:border-emerald-700"
+                className={`${inputClass} py-2`}
               />
             </label>
             <label className="sm:col-span-2">
@@ -133,13 +165,19 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
               <textarea
                 name="notes"
                 rows={3}
-                className="mt-2 w-full rounded-md border border-stone-200 px-3 py-2 text-sm outline-none focus:border-emerald-700"
+                className={`${inputClass} py-2`}
               />
             </label>
           </div>
-        </fieldset>
+        </motion.fieldset>
 
-        <fieldset className="rounded-md border border-stone-200 bg-white p-5 shadow-sm">
+        <motion.fieldset
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 18 }}
+          viewport={{ once: true, amount: 0.24 }}
+          transition={{ duration: 0.5, ease: motionEase }}
+          className="alive-card rounded-[8px] p-6"
+        >
           <legend className="flex items-center gap-2 px-1 text-sm font-semibold text-stone-950">
             <CreditCard className="size-4" />
             {dict.checkout.payment}
@@ -155,31 +193,32 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
                 type="button"
                 onClick={() => setPaymentMethod(option.value)}
                 className={[
-                  "h-12 rounded-md border px-3 text-sm font-semibold",
+                  "button-rise h-12 rounded-[8px] border px-3 text-sm font-semibold",
                   paymentMethod === option.value
                     ? "border-emerald-800 bg-emerald-50 text-emerald-950"
-                    : "border-stone-200 text-stone-700",
+                    : "border-stone-900/15 bg-white text-stone-700",
                 ].join(" ")}
               >
                 {option.label}
               </button>
             ))}
           </div>
-        </fieldset>
+        </motion.fieldset>
 
-        {error && <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+        {error && <p className="rounded-[8px] border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
 
-        <button
+        <motion.button
           type="submit"
-          className="inline-flex h-12 w-full items-center justify-center rounded-md bg-emerald-900 px-5 text-sm font-semibold text-white hover:bg-emerald-800 sm:w-auto"
+          whileTap={{ scale: 0.97 }}
+          className="button-rise inline-flex h-12 w-full items-center justify-center rounded-[8px] bg-emerald-900 px-5 text-sm font-semibold text-white sm:w-auto"
         >
           {dict.checkout.placeOrder}
-        </button>
-      </form>
+        </motion.button>
+      </motion.form>
 
-      <aside className="h-fit rounded-md border border-stone-200 bg-white p-5 shadow-sm">
+      <aside className="alive-card sticky top-24 h-fit rounded-[8px] p-6">
         <h2 className="text-lg font-semibold text-stone-950">{dict.cart.summary}</h2>
-        <div className="mt-5 divide-y divide-stone-200 border-y border-stone-200">
+        <div className="mt-5 divide-y divide-stone-900/10 border-y border-stone-900/10">
           {cart.lines.map((line) => (
             <div key={`${line.productId}-${line.variantId}`} className="py-3 text-sm">
               <p className="line-clamp-1 font-semibold text-stone-950">{line.product.name}</p>
@@ -204,7 +243,7 @@ export function CheckoutForm({ dict, locale }: { dict: Dictionary; locale: Local
           </div>
         </dl>
       </aside>
-    </section>
+    </motion.section>
   );
 }
 
@@ -215,7 +254,7 @@ function TextInput({ label, name, type = "text" }: { label: string; name: string
       <input
         name={name}
         type={type}
-        className="mt-2 h-11 w-full rounded-md border border-stone-200 px-3 text-sm outline-none focus:border-emerald-700"
+        className={`${inputClass} h-11`}
       />
     </label>
   );

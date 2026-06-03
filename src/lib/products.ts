@@ -78,8 +78,8 @@ export const products: Product[] = [
     features: [
       "Oxford 150D material with PU 3000MM waterproof rating.",
       "Tunnel layout with 1 bedroom and 1 guest room.",
-      "Scraped size: 480 x 260 x 200 cm.",
-      "Scraped weight: 14.5 kg.",
+      "Size: 480 x 260 x 200 cm.",
+      "Weight: 14.5 kg.",
       "Large 4-8 person capacity for family or group camping.",
       "Double layer design for weather protection.",
     ],
@@ -110,7 +110,7 @@ export const products: Product[] = [
     features: [
       "Black edition of the Eclipta 4P tunnel tent.",
       "Double layer waterproof construction.",
-      "Preorder item with scraped 40-60 day lead time.",
+      "Preorder item with an estimated 40-60 day lead time.",
       "Built for 4 person camping with extra lounge space.",
     ],
     images: [
@@ -140,12 +140,12 @@ export const products: Product[] = [
     ],
     features: [
       "Automatic double layer glamping tent.",
-      "Scraped size: 5 x 2.8 x 1.9 m.",
+      "Size: 5 x 2.8 x 1.9 m.",
       "150D silver-coated Oxford outer with PU 2000-3000MM.",
       "190T polyester inner with high density mesh.",
       "150D Oxford flooring with PU 2000-3000MM.",
       "5-8 person capacity with 4 doors and wide windows.",
-      "Scraped weight: 17 kg.",
+      "Weight: 17 kg.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/TES_COVER_BARU_peak_villa.jpg?v=1763718088",
@@ -173,12 +173,12 @@ export const products: Product[] = [
     variants: [{ id: "large", name: "Large", price: 5550000 }],
     features: [
       "2 rooms plus 1 hall family layout.",
-      "Scraped capacity: 6-8 people.",
+      "Capacity: 6-8 people.",
       "210D polyester Oxford ripstop outer with silver-coated PU2000MM.",
       "190T 68D polyester inner with PU600MM.",
       "Automatic iron steel frame.",
-      "Scraped size: 400 x 280 x 190 cm.",
-      "Scraped weight: 18 kg.",
+      "Size: 400 x 280 x 190 cm.",
+      "Weight: 18 kg.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/cv_18cabc67-135c-4330-88b9-654a8650e4e7.jpg?v=1709800415",
@@ -235,7 +235,7 @@ export const products: Product[] = [
       "Automatic 3-4 person tent.",
       "Double layer construction.",
       "Good middle option for couples, small families, or quick weekend trips.",
-      "Scraped as available on the Tent collection.",
+      "Available in the tent collection.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/COVER_ae5c6538-0c60-4ffa-9200-56c6376dc747.jpg?v=1759976566",
@@ -263,7 +263,7 @@ export const products: Product[] = [
       "210D Oxford material.",
       "Waterproof PU 3000MM.",
       "Anti UV UPF 50+ protection.",
-      "Scraped capacity: 6-8 people.",
+      "Capacity: 6-8 people.",
       "Reflective windrope included.",
       "Works as a shade and rain extension for tent setups.",
     ],
@@ -294,7 +294,7 @@ export const products: Product[] = [
       "Large 6 x 6 meter flysheet.",
       "Anti UV multifunction camping shade.",
       "Best for family camps, basecamp kitchens, and group dining zones.",
-      "Scraped as available in best sellers.",
+      "A reliable option for family camps, basecamp kitchens, and group dining zones.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/Cover_35ba2911-7acb-4ef2-95ee-9a0c669c2341.jpg?v=1737529025",
@@ -352,7 +352,7 @@ export const products: Product[] = [
     features: [
       "Automatic inflation with 4000 mAh electric pump.",
       "PVC premium sleeping surface.",
-      "Scraped height: 40 cm.",
+      "Height: 40 cm.",
       "Single size: 190 x 100 x 40 cm for 1 person.",
       "Double size: 200 x 150 x 40 cm for 2 people.",
       "Includes air mattress, pillow, electric pump, patch, nozzle, charging cable, and storage bag.",
@@ -383,7 +383,7 @@ export const products: Product[] = [
       "Expandable 3 in 1 air mattress.",
       "Connectable design for flexible sleeping layouts.",
       "Good budget comfort upgrade for family tents.",
-      "Scraped as available in product recommendations.",
+      "Flexible option for family tent comfort upgrades.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/COVER_05bff8df-f176-47bb-b315-652c71b21908.jpg?v=1778472993",
@@ -407,7 +407,7 @@ export const products: Product[] = [
       "Portable outdoor sleeping bag.",
       "Envelope-style sleep system for camping.",
       "Works as a warm layer inside tents or under flysheet shelters.",
-      "Scraped as sold out in Sleeping System collection.",
+      "Popular sleeping system option with limited availability.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/ef077fad-2bcd-414e-917f-2833bf592dbf.jpg_tplv-aphluv4xwc-resize-webp_800_800.webp?v=1759292714",
@@ -432,7 +432,7 @@ export const products: Product[] = [
       "Portable folding air pillow.",
       "Small add-on for compact sleeping kits.",
       "Useful for hiking, car camping, and emergency rest kits.",
-      "Scraped as available in Sleeping System and Outdoor Equipment.",
+      "Available in sleeping system and outdoor equipment setups.",
     ],
     images: ["https://www.alltrekoutdoor.com/cdn/shop/files/comfy.jpg?v=1713955327"],
     rating: 4.5,
@@ -455,7 +455,7 @@ export const products: Product[] = [
       "Camping blanket for extra warmth.",
       "Good companion for air mattress setups.",
       "Can be used for picnic, camp chair comfort, or sleeping layer.",
-      "Scraped as available in Sleeping System.",
+      "Compact comfort layer for sleeping system setups.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/f8298724-2e4f-4a2f-a1be-d6b5e8209f5b.jpg?v=1726826286",
@@ -477,7 +477,7 @@ export const products: Product[] = [
     features: [
       "9 in 1 outdoor cooking set.",
       "Compact cooking option for hiking and camping.",
-      "Best seller scrape showed it as sold out.",
+      "Popular cooking kit with limited availability.",
       "Good reference for future restock bundles.",
     ],
     images: [
@@ -502,7 +502,7 @@ export const products: Product[] = [
     variants: [{ id: "4-cooking-set-2-tools", name: "4 Cooking Set + 2 Tools", price: 445000 }],
     features: [
       "Aluminium alloy material.",
-      "Scraped weight: 1 kg.",
+      "Weight: 1 kg.",
       "Includes 1.6 L pot, 1.5 L pot, frying pan, and kettle.",
       "Suitable for boiling, frying, sauteing, and hot drinks.",
       "Portable cooking kit for 2 portion meals.",
@@ -532,7 +532,7 @@ export const products: Product[] = [
       "11 in 1 silicone outdoor cooking set.",
       "Compact set for camp kitchen organization.",
       "Best for families who want more prep pieces in one kit.",
-      "Scraped as available in Kitchenware.",
+      "Practical add-on for camp kitchen setups.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/9662c68b-af50-4c0f-9f36-f2af55f923ab.jpg?v=1709801357",
@@ -557,7 +557,7 @@ export const products: Product[] = [
       "Portable folding gas stove.",
       "Split small stove design for outdoor cooking.",
       "Pairs with Castry or Feasty cooking sets.",
-      "Scraped as available in Kitchenware.",
+      "Available for compact outdoor cooking setups.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/0140d5e6-8319-4d1c-81c2-3916d3f42276_a1f49a28-a0ff-446b-8e5e-c876f831f014.jpg?v=1724130262",
@@ -582,7 +582,7 @@ export const products: Product[] = [
       "12 L large capacity water tank.",
       "Black upgrade edition.",
       "Useful for family camp kitchens and washing stations.",
-      "Scraped as available and best seller.",
+      "Reliable water storage pick for family camp kitchens.",
     ],
     images: ["https://www.alltrekoutdoor.com/cdn/shop/files/waterablack.jpg?v=1714376229"],
     rating: 4.6,
@@ -606,7 +606,7 @@ export const products: Product[] = [
       "22 piece portable family tableware pack.",
       "Good add-on for group meals.",
       "Keeps camp kitchen packing simple.",
-      "Scraped as available in Kitchenware.",
+      "Helps keep plates, bowls, and cutlery organized in one pack.",
     ],
     images: ["https://www.alltrekoutdoor.com/cdn/shop/files/tableware.jpg?v=1713956514"],
     rating: 4.5,
@@ -633,7 +633,7 @@ export const products: Product[] = [
       "IPX4 waterproof rating.",
       "1200 mAh battery.",
       "Type-C rechargeable.",
-      "Scraped light duration: 6-12 hours.",
+      "Light duration: 6-12 hours.",
       "4 adjustable light modes.",
       "Size: 10.4 x 10.4 x 9.3 cm; weight: 154 g.",
     ],
@@ -663,7 +663,7 @@ export const products: Product[] = [
       "Vintage style camping USB light.",
       "2 lighting modes.",
       "Compact lamp for table, tent, or glamping ambiance.",
-      "Scraped as available and best seller.",
+      "Useful as a warm accent light for relaxed campsite evenings.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/70fecf33-271a-4b6c-8dc4-2eb9de24488a.jpg?v=1709809243",
@@ -689,7 +689,7 @@ export const products: Product[] = [
     features: [
       "Rechargeable outdoor luxury lamp.",
       "Good for glamping tables and tent interiors.",
-      "Price range scraped from Lighting collection.",
+      "Available in basic and premium lighting options.",
       "Recommended for ambiance-focused setups.",
     ],
     images: [
@@ -715,7 +715,7 @@ export const products: Product[] = [
       "Vintage style outdoor lantern.",
       "Budget-friendly tent light.",
       "Good for starter kits and spare campsite lighting.",
-      "Scraped as available in Lighting.",
+      "Reliable spare light for starter kits and nighttime camp use.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/af335e12b5fa4357b9e7a31b7c6b93b6.jpg?v=1751635104",
@@ -739,8 +739,8 @@ export const products: Product[] = [
     features: [
       "Multifunction emergency lamp.",
       "Useful backup for rain, power bank stations, and night cooking.",
-      "Scraped as available in Lighting.",
-      "Recommended for safety-focused bundles.",
+      "Recommended for safety-focused lighting bundles.",
+      "Works well as a backup light for family or group setups.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/b5059ec3-47ff-429e-9468-6327c040ac3e.jpg?v=1709808972",
@@ -766,7 +766,7 @@ export const products: Product[] = [
       "Foldable multifunction water bucket.",
       "Useful for washing, carrying water, and campsite cleanup.",
       "Compact storage for car camping kits.",
-      "Scraped as available and best seller.",
+      "Compact storage for car camping kits and cleanup stations.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/d2c7ef13-0bd2-48dc-970a-0a895acbceac_95a6df77-92ef-409b-8fc5-32a2c59636a0.jpg?v=1724315310",
@@ -791,8 +791,8 @@ export const products: Product[] = [
     features: [
       "50 L folding storage box.",
       "Keeps cooking kits, lighting, and tent accessories organized.",
-      "Scraped as available in best sellers and Furnitures.",
-      "Good add-on for car camping and glamping packing.",
+      "Useful add-on for car camping and glamping packing.",
+      "Folds down for easier storage between trips.",
     ],
     images: ["https://www.alltrekoutdoor.com/cdn/shop/files/foldingbox.jpg?v=1714373248"],
     rating: 4.6,
@@ -814,8 +814,8 @@ export const products: Product[] = [
     features: [
       "Kermit-style detachable folding chair.",
       "Comfort upgrade for campsite dining or tent vestibules.",
-      "Scraped as available in Furnitures.",
       "Best paired with a folding table and lighting.",
+      "Detachable build helps simplify packing after camp.",
     ],
     images: [
       "https://www.alltrekoutdoor.com/cdn/shop/files/1ea641ba-87a9-4e0e-847d-4a913aabb557.jpg?v=1736149700",
@@ -839,7 +839,7 @@ export const products: Product[] = [
     features: [
       "Aluminum alloy folding camping table.",
       "IGT-style setup for cooking and dining organization.",
-      "Price range scraped from Furnitures collection.",
+      "Available in compact and larger table options.",
       "Recommended for kitchen-focused bundles.",
     ],
     images: [
@@ -864,7 +864,7 @@ export const products: Product[] = [
     features: [
       "Outdoor folding moon chair.",
       "Comfortable camp lounge seating.",
-      "Price range scraped from Furnitures collection.",
+      "Available in standard and premium seating options.",
       "Good for family and glamping setups.",
     ],
     images: ["https://www.alltrekoutdoor.com/cdn/shop/files/Nomad.jpg?v=1714368426"],
@@ -885,7 +885,7 @@ export const products: Product[] = [
     features: [
       "Ultralight single/double hammock.",
       "Super light hangout option for camp rest.",
-      "Scraped as sold out in Furnitures.",
+      "Limited-availability rest option for solo campers.",
       "Useful as a future restock suggestion for solo campers.",
     ],
     images: [

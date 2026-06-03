@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alltrek Indonesia - Ecommerce Showcase",
+  title: "Alltrek Indonesia - Outdoor Gear Store",
   description:
-    "Responsive bilingual ecommerce showcase for Alltrek Indonesia camping and outdoor gear.",
+    "Camping, glamping, and outdoor gear from Alltrek Indonesia for families, communities, and B2B needs.",
 };
 
 export default function RootLayout({

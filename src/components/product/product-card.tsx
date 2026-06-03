@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Star } from "lucide-react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { motionEase } from "@/components/motion/reveal";
 import { availabilityLabels, categoryLabels, formatPrice } from "@/lib/products";
 import { localizePath } from "@/lib/i18n";
 import type { Dictionary } from "@/dictionaries/id";
@@ -11,16 +15,26 @@ export function ProductCard({
   product,
   dict,
   locale,
+  eager = false,
 }: {
   product: Product;
   dict: Dictionary;
   locale: Locale;
+  eager?: boolean;
 }) {
   const category = categoryLabels[product.category][locale];
   const availability = availabilityLabels[product.availability][locale];
+  const reduceMotion = useReducedMotion();
 
   return (
-    <article className="group overflow-hidden rounded-md border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <motion.article
+      initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.18 }}
+      whileHover={reduceMotion ? undefined : { y: -8 }}
+      transition={{ duration: 0.58, ease: motionEase }}
+      className="alive-card group overflow-hidden rounded-[8px]"
+    >
       <Link href={localizePath(locale, `/products/${product.slug}`)} className="block">
         <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
           <Image
@@ -28,15 +42,21 @@ export function ProductCard({
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : "auto"}
+            className="object-cover transition duration-700 group-hover:scale-110"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-stone-950/5 to-transparent opacity-80 transition group-hover:opacity-95" />
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             {product.badges.slice(0, 2).map((badge) => (
-              <span key={badge} className="rounded bg-white/95 px-2 py-1 text-xs font-semibold text-stone-950">
+              <span key={badge} className="rounded bg-white px-2 py-1 text-xs font-semibold text-stone-950 shadow-sm">
                 {badge}
               </span>
             ))}
           </div>
+          <span className="absolute bottom-3 right-3 inline-flex size-9 translate-y-2 items-center justify-center rounded-[8px] bg-amber-400 text-stone-950 opacity-0 shadow-lg transition group-hover:translate-y-0 group-hover:opacity-100">
+            <ArrowUpRight className="size-4" />
+          </span>
         </div>
       </Link>
       <div className="space-y-4 p-4">
@@ -54,7 +74,9 @@ export function ProductCard({
           >
             {product.name}
           </Link>
-          <p className="mt-2 text-xs font-medium text-stone-500">{availability}</p>
+          <p className="mt-3 inline-flex rounded border border-emerald-900/15 bg-emerald-900/5 px-2 py-1 text-xs font-semibold text-emerald-900">
+            {availability}
+          </p>
         </div>
         <div className="flex min-h-11 items-end justify-between gap-3">
           <div>
@@ -71,6 +93,6 @@ export function ProductCard({
           />
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

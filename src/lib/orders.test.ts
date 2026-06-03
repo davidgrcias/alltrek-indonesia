@@ -31,7 +31,7 @@ const order: Order = {
   subtotal: 140000,
   shipping: 0,
   total: 140000,
-  status: "mock-paid",
+  status: "confirmed",
   createdAt: "2026-06-03T08:00:00.000Z",
 };
 

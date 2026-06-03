@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
+  --background: #f7f3ea;
+  --foreground: #181512;
+  --ink: #181512;
+  --moss: #0f3d2e;
+  --pine: #064e3b;
+  --canopy: #0d9488;
+  --ember: #f59e0b;
+  --clay: #c2410c;
+  --paper: #fffdf7;
+  --line: rgba(41, 37, 36, 0.13);
 }
 
 @theme inline {
@@ -13,7 +21,11 @@
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    linear-gradient(115deg, rgba(13, 148, 136, 0.1), transparent 32%),
+    linear-gradient(245deg, rgba(194, 65, 12, 0.11), transparent 30%),
+    linear-gradient(180deg, #f7f3ea 0%, #eef6ef 48%, #fbf0df 100%);
   color: var(--foreground);
 }
 
@@ -28,4 +40,149 @@ textarea {
 ::selection {
   background: #fbbf24;
   color: #1c1917;
+}
+
+.site-texture {
+  background-image:
+    linear-gradient(rgba(28, 25, 23, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 25, 23, 0.025) 1px, transparent 1px),
+    repeating-linear-gradient(118deg, rgba(13, 148, 136, 0.055) 0 1px, transparent 1px 28px),
+    linear-gradient(135deg, rgba(245, 158, 11, 0.055), transparent 46%);
+  background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%;
+}
+
+.topo-lines {
+  background-image:
+    repeating-radial-gradient(ellipse at 18% 10%, rgba(13, 148, 136, 0.18) 0 1px, transparent 1px 30px),
+    repeating-radial-gradient(ellipse at 82% 20%, rgba(245, 158, 11, 0.14) 0 1px, transparent 1px 36px);
+}
+
+.alive-card {
+  position: relative;
+  border: 1px solid rgba(41, 37, 36, 0.13);
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(255, 255, 255, 0.86)),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(245, 158, 11, 0.08));
+  box-shadow: 0 18px 50px rgba(28, 25, 23, 0.08);
+}
+
+.alive-card::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.28) 45%, transparent 72%);
+  opacity: 0;
+  transform: translateX(-60%);
+  transition: opacity 300ms ease, transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.alive-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.alive-card:hover::before {
+  opacity: 1;
+  transform: translateX(60%);
+}
+
+.kinetic-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.kinetic-border::after {
+  position: absolute;
+  inset: auto 10% 0;
+  height: 2px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--canopy), var(--ember), transparent);
+  transform: translateX(-120%);
+  animation: trailFlow 4.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.button-rise {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms ease,
+    border-color 220ms ease;
+}
+
+.button-rise:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 61, 46, 0.18);
+}
+
+.hero-scan {
+  background:
+    linear-gradient(90deg, rgba(24, 21, 18, 0.9), rgba(24, 21, 18, 0.58), rgba(24, 21, 18, 0.28)),
+    repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 30px);
+}
+
+.route-strip {
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 50%, transparent 50%);
+  background-size: 18px 2px;
+  animation: trailMarch 1.8s linear infinite;
+}
+
+.float-hard {
+  animation: floatHard 5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+.clip-reveal {
+  animation: clipReveal 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes trailFlow {
+  0% {
+    transform: translateX(-120%);
+  }
+  56%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes trailMarch {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 18px 0;
+  }
+}
+
+@keyframes floatHard {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  45% {
+    transform: translate3d(0, -10px, 0) rotate(-1deg);
+  }
+  72% {
+    transform: translate3d(0, 4px, 0) rotate(1deg);
+  }
+}
+
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

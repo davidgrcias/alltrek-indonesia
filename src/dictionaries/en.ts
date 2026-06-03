@@ -2,9 +2,9 @@ import type { Dictionary } from "./id";
 
 export const en: Dictionary = {
   meta: {
-    title: "Alltrek Indonesia - Ecommerce Showcase",
+    title: "Alltrek Indonesia - Outdoor Gear Store",
     description:
-      "A bilingual ecommerce showcase for Alltrek Indonesia camping, glamping, and outdoor gear.",
+      "Shop Alltrek Indonesia camping, glamping, and outdoor gear for families, communities, and procurement needs.",
   },
   nav: {
     home: "Home",
@@ -28,7 +28,7 @@ export const en: Dictionary = {
     total: "Total",
     free: "Free",
     back: "Back",
-    source: "Source",
+    source: "Product page",
     availability: "Status",
     category: "Category",
     variant: "Variant",
@@ -44,15 +44,13 @@ export const en: Dictionary = {
     heroTitle: "Camping and glamping gear for a clearer weekend plan.",
     heroCopy:
       "Choose tents, flysheets, mattresses, cooking sets, lamps, and outdoor furniture from an Alltrek catalog curated for families, solo campers, and B2B needs.",
-    heroVideoMissing:
-      "The video slot is public/media/alltrek-hero.mp4. Until that file exists, the hero uses an Alltrek product poster.",
     heroPrimary: "Find gear",
     heroSecondary: "Ask Camp Advisor",
-    statsProducts: "Static products",
+    statsProducts: "Curated products",
     statsCategories: "Categories",
     statsStore: "Jakarta store",
     bestSellers: "Best sellers",
-    bestSellersCopy: "Sourced from Alltrek best sellers and core categories.",
+    bestSellersCopy: "Frequently chosen for family tents, camp kitchens, lighting, and sleep comfort.",
     bundles: "Starter bundles",
     b2bTitle: "Need outdoor procurement for a community or office?",
     b2bCopy:
@@ -79,19 +77,19 @@ export const en: Dictionary = {
     chooseVariant: "Choose variant",
     capacity: "Capacity",
     weather: "Weather",
-    sourceCopy: "Product data uses a seed generated from Alltrek scrape results.",
+    sourceCopy: "Alltrek helps confirm stock, variants, and product fit before the order is processed.",
   },
   cart: {
     title: "Cart",
     emptyTitle: "Your cart is empty",
-    emptyCopy: "Add a tent or camp gear before the mock checkout.",
+    emptyCopy: "Add a tent or camp gear before continuing to checkout.",
     summary: "Summary",
-    checkout: "Mock checkout",
+    checkout: "Continue to checkout",
     clear: "Clear",
   },
   checkout: {
-    title: "Mock checkout",
-    copy: "Local checkout simulation. No real payment is charged and no data is sent to a payment gateway.",
+    title: "Checkout",
+    copy: "Add contact details, fulfillment, and payment preference. Alltrek will confirm the order through WhatsApp.",
     contact: "Contact",
     fulfillment: "Fulfillment",
     delivery: "Deliver to address",
@@ -102,19 +100,19 @@ export const en: Dictionary = {
     cash: "Pay at pickup",
     address: "Address",
     notes: "Notes",
-    placeOrder: "Create mock order",
+    placeOrder: "Create order",
     name: "Name",
     email: "Email",
     phone: "WhatsApp number",
     city: "City",
-    success: "Mock order created.",
+    success: "Order created.",
   },
   order: {
     title: "Order",
-    successTitle: "Mock payment complete",
-    successCopy: "The order is stored in this browser. Continue confirmation via WhatsApp or Tokopedia.",
+    successTitle: "Order received",
+    successCopy: "Your order details are recorded. Continue through WhatsApp or Tokopedia to confirm stock and pickup/delivery timing.",
     notFound: "Order was not found in this browser.",
-    status: "mock-paid status",
+    status: "Awaiting store confirmation",
   },
   b2b: {
     title: "B2B and partnerships",
@@ -129,14 +127,14 @@ export const en: Dictionary = {
   },
   agent: {
     title: "Alltrek Camp Advisor",
-    subtitle: "Gemini shopping agent",
+    subtitle: "Outdoor shopping assistant",
     placeholder: "Example: a tent for a family of 5 in rainy weather",
     send: "Send",
     open: "Open chat",
     close: "Close chat",
     configError:
-      "Gemini is not configured. Set GEMINI_API_KEY in Vercel or .env.local.",
-    networkError: "The chat could not be processed. Check Gemini configuration and try again.",
+      "Camp Advisor is currently offline. Continue the consultation through Alltrek WhatsApp.",
+    networkError: "The chat could not be processed. Try again or continue through WhatsApp.",
     starter: "I can help choose a tent, build a starter bundle, or review your cart.",
   },
   footer: {

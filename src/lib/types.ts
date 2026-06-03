@@ -76,7 +76,7 @@ export type Order = {
   subtotal: number;
   shipping: number;
   total: number;
-  status: "mock-paid";
+  status: "confirmed";
   createdAt: string;
 };
 

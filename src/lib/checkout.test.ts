@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createMockOrder, validateCheckout } from "./checkout";
+import { createOrder, validateCheckout } from "./checkout";
 
 const validInput = {
   customer: {
@@ -22,16 +22,16 @@ describe("checkout utilities", () => {
     );
   });
 
-  it("creates a mock paid order", () => {
+  it("creates a confirmed order", () => {
     vi.spyOn(Math, "random").mockReturnValue(0.123456);
-    const order = createMockOrder(
+    const order = createOrder(
       validInput,
       [{ productId: "rygen", variantId: "black", quantity: 2 }],
       new Date("2026-06-03T08:00:00.000Z"),
     );
 
     expect(order.id).toMatch(/^ATK-20260603-/);
-    expect(order.status).toBe("mock-paid");
+    expect(order.status).toBe("confirmed");
     expect(order.shipping).toBe(0);
     expect(order.total).toBe(280000);
     vi.restoreAllMocks();

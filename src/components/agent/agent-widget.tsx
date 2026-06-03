@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { Bot, Loader2, MessageCircle, Send, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "@/components/cart/cart-provider";
+import { motionEase } from "@/components/motion/reveal";
 import { formatPrice, getProductById } from "@/lib/products";
 import { localizePath } from "@/lib/i18n";
 import type { Dictionary } from "@/dictionaries/id";
@@ -88,11 +90,18 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-3">
-      {open && (
-        <section className="h-[min(620px,calc(100svh-6rem))] w-[min(420px,calc(100vw-2rem))] overflow-hidden rounded-md border border-stone-200 bg-white shadow-2xl">
-          <header className="flex h-14 items-center justify-between border-b border-stone-200 px-4">
+      <AnimatePresence>
+        {open && (
+        <motion.section
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 18, scale: 0.96 }}
+          transition={{ duration: 0.32, ease: motionEase }}
+          className="h-[min(620px,calc(100svh-6rem))] w-[min(420px,calc(100vw-2rem))] overflow-hidden rounded-[8px] border border-stone-900/15 bg-[#fffdf7] shadow-2xl shadow-stone-950/20"
+        >
+          <header className="flex h-14 items-center justify-between border-b border-stone-900/10 px-4">
             <div className="flex items-center gap-2">
-              <span className="grid size-9 place-items-center rounded-md bg-emerald-900 text-white">
+              <span className="grid size-9 place-items-center rounded-[8px] bg-emerald-900 text-white">
                 <Bot className="size-5" />
               </span>
               <div>
@@ -103,7 +112,7 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="grid size-9 place-items-center rounded-md border border-stone-200 text-stone-700"
+              className="grid size-9 place-items-center rounded-[8px] border border-stone-900/15 text-stone-700"
               aria-label={dict.agent.close}
             >
               <X className="size-4" />
@@ -111,26 +120,29 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
           </header>
 
           {status === "missing" ? (
-            <div className="p-4 text-sm text-red-700">{dict.agent.configError}</div>
+            <div className="p-4 text-sm leading-6 text-red-700">{dict.agent.configError}</div>
           ) : (
             <>
               <div ref={listRef} className="h-[calc(100%-8.75rem)] overflow-y-auto p-4">
                 <div className="space-y-3">
                   {messages.map((message, index) => (
-                    <div
+                    <motion.div
                       key={`${message.role}-${index}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.24, ease: motionEase }}
                       className={[
-                        "max-w-[85%] rounded-md px-3 py-2 text-sm leading-6",
+                        "max-w-[85%] rounded-[8px] px-3 py-2 text-sm leading-6",
                         message.role === "user"
                           ? "ml-auto bg-emerald-900 text-white"
-                          : "bg-stone-100 text-stone-800",
+                          : "bg-stone-100 text-stone-800 shadow-sm",
                       ].join(" ")}
                     >
                       {message.content}
-                    </div>
+                    </motion.div>
                   ))}
                   {loading && (
-                    <div className="inline-flex items-center gap-2 rounded-md bg-stone-100 px-3 py-2 text-sm text-stone-600">
+                    <div className="inline-flex items-center gap-2 rounded-[8px] bg-stone-100 px-3 py-2 text-sm text-stone-600">
                       <Loader2 className="size-4 animate-spin" />
                       {dict.common.loading}
                     </div>
@@ -140,20 +152,25 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
                 {recommended.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {recommended.map((product) => (
-                      <Link
+                      <motion.div
                         key={product.id}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                      <Link
                         href={localizePath(locale, `/products/${product.slug}`)}
-                        className="block rounded-md border border-stone-200 p-3 text-sm hover:border-emerald-800"
+                        className="block rounded-[8px] border border-stone-900/15 bg-white p-3 text-sm hover:border-emerald-800"
                       >
                         <span className="line-clamp-1 font-semibold text-stone-950">{product.name}</span>
                         <span className="text-stone-600">{formatPrice(product.price)}</span>
                       </Link>
+                      </motion.div>
                     ))}
                     {lastResponse?.cartPatch?.add?.length ? (
                       <button
                         type="button"
                         onClick={applyCartPatch}
-                        className="h-10 w-full rounded-md bg-amber-400 px-3 text-sm font-semibold text-stone-950 hover:bg-amber-300"
+                        className="button-rise h-10 w-full rounded-[8px] bg-amber-400 px-3 text-sm font-semibold text-stone-950"
                       >
                         {dict.common.addToCart}
                       </button>
@@ -168,7 +185,7 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
                         key={reply}
                         type="button"
                         onClick={() => sendMessage(reply)}
-                        className="rounded-md border border-stone-200 px-2.5 py-1.5 text-xs font-medium text-stone-700 hover:border-emerald-800"
+                        className="rounded-[8px] border border-stone-900/15 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-700 hover:border-emerald-800"
                       >
                         {reply}
                       </button>
@@ -181,18 +198,18 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
                   event.preventDefault();
                   void sendMessage();
                 }}
-                className="flex h-20 items-center gap-2 border-t border-stone-200 p-3"
+                className="flex h-20 items-center gap-2 border-t border-stone-900/10 p-3"
               >
                 <input
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder={dict.agent.placeholder}
-                  className="h-11 min-w-0 flex-1 rounded-md border border-stone-200 px-3 text-sm outline-none focus:border-emerald-700"
+                  className="h-11 min-w-0 flex-1 rounded-[8px] border border-stone-900/15 bg-white px-3 text-sm text-stone-950 outline-none transition focus:border-emerald-700 focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                 />
                 <button
                   type="submit"
                   disabled={loading || status !== "configured"}
-                  className="grid size-11 place-items-center rounded-md bg-emerald-900 text-white disabled:bg-stone-300"
+                  className="grid size-11 place-items-center rounded-[8px] bg-emerald-900 text-white disabled:bg-stone-300"
                   aria-label={dict.agent.send}
                 >
                   <Send className="size-4" />
@@ -200,18 +217,21 @@ export function AgentWidget({ dict, locale }: { dict: Dictionary; locale: Locale
               </form>
             </>
           )}
-        </section>
-      )}
+        </motion.section>
+        )}
+      </AnimatePresence>
 
-      <button
+      <motion.button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-12 items-center gap-2 rounded-md bg-emerald-900 px-4 text-sm font-semibold text-white shadow-lg hover:bg-emerald-800"
+        whileHover={{ y: -3, scale: 1.02 }}
+        whileTap={{ scale: 0.96 }}
+        className="button-rise inline-flex h-12 items-center gap-2 rounded-[8px] bg-emerald-900 px-4 text-sm font-semibold text-white shadow-lg shadow-emerald-900/20"
         aria-label={open ? dict.agent.close : dict.agent.open}
       >
         <MessageCircle className="size-5" />
         <span className="hidden sm:inline">{dict.agent.title}</span>
-      </button>
+      </motion.button>
     </div>
   );
 }

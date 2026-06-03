@@ -17,7 +17,7 @@ export function AppShell({
   return (
     <CartProvider>
       <SiteHeader dict={dict} locale={locale} />
-      <main className="min-h-screen bg-stone-50">{children}</main>
+      <main className="site-texture min-h-screen">{children}</main>
       <SiteFooter dict={dict} locale={locale} />
       <AgentWidget dict={dict} locale={locale} />
     </CartProvider>

@@ -27,7 +27,7 @@ export function createOrderId(now = new Date()) {
   return `ATK-${date}-${random}`;
 }
 
-export function createMockOrder(
+export function createOrder(
   input: {
     customer: CheckoutInput["customer"];
     fulfillment: Fulfillment;
@@ -52,7 +52,7 @@ export function createMockOrder(
     subtotal: totals.subtotal,
     shipping: totals.shipping,
     total: totals.total,
-    status: "mock-paid",
+    status: "confirmed",
     createdAt: now.toISOString(),
   };
 }
