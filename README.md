@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alltrek Indonesia Ecommerce MVP
+
+Responsive bilingual ecommerce showcase for Alltrek Indonesia, built with Next.js App Router, TypeScript, Tailwind, local mock checkout, and a mandatory Gemini shopping agent.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set `GEMINI_API_KEY` in `.env.local` for `/api/agent`. Without it, the chat widget shows a configuration error and does not use fake responses.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - local dev server.
+- `npm run lint` - ESLint.
+- `npm run test` - Vitest utility tests.
+- `npm run build` - production build and route type generation.
 
-## Learn More
+## Routes
 
-To learn more about Next.js, take a look at the following resources:
+- `/` redirects to `/id`.
+- `/id` and `/en` are locale roots.
+- `/[locale]/products`, `/[locale]/products/[slug]`, `/[locale]/cart`, `/[locale]/checkout`, `/[locale]/orders/[id]`, `/[locale]/b2b`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Data Sources
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Seed data was scraped from Alltrek homepage, best sellers, About Us, product/category pages, YouTube channel metadata, and official Google Gemini SDK docs confirming `@google/genai`.
 
-## Deploy on Vercel
+## Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deploy with the included `vercel.json`. Required environment variable: `GEMINI_API_KEY`. Optional variables: `GEMINI_MODEL`, `NEXT_PUBLIC_TOKOPEDIA_URL`, `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_SITE_URL`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hero video slot: place `public/media/alltrek-hero.mp4`. If absent, the browser keeps the Alltrek product poster image.
